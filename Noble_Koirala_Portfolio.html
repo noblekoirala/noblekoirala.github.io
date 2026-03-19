@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noble Koirala — Analytics & Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e44;
+    --navy-light: #243b55;
+    --gold: #c8a96e;
+    --gold-light: #e8c98a;
+    --cream: #f7f3ee;
+    --cream-dark: #ede7dc;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-muted: #7a7a7a;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 60px;
+    border-bottom: 1px solid var(--navy-light);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 169, 110, 0.08);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 169, 110, 0.12);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(200, 169, 110, 0.12);
+    color: var(--gold);
+    border: 1px solid rgba(200, 169, 110, 0.3);
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 80px);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .hero-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 2px;
+    margin-bottom: 48px;
+    transition: background 0.2s;
+  }
+
+  .hero-cta:hover { background: var(--gold-light); }
+
+  /* SECTIONS */
+  section {
+    padding: 96px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 44px);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 48px;
+    font-weight: 700;
+  }
+
+  .section-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  /* ABOUT */
+  #about {
+    padding-top: 96px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .about-right {
+    background: var(--navy);
+    border-radius: 4px;
+    padding: 36px;
+    color: white;
+  }
+
+  .about-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .about-detail:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .about-detail-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .about-detail-value {
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+  }
+
+  /* SKILLS */
+  #skills {
+    background: var(--navy);
+    max-width: 100%;
+    padding: 96px 48px;
+  }
+
+  #skills .section-title { color: var(--white); }
+
+  .skills-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .skill-card {
+    background: var(--navy-mid);
+    padding: 32px 28px;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: var(--navy-light); }
+
+  .skill-category {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skill-list li {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-list li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* EXPERIENCE */
+  #experience { padding: 96px 48px; max-width: 960px; margin: 0 auto; }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--cream);
+  }
+
+  .timeline-period {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .timeline-company {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .timeline-bullets li {
+    font-size: 15px;
+    color: var(--text-mid);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .timeline-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* ACHIEVEMENTS */
+  #achievements {
+    background: var(--cream-dark);
+    max-width: 100%;
+    padding: 96px 48px;
+  }
+
+  .achievements-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .achievement-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-top: 3px solid var(--gold);
+    padding: 32px 28px;
+    border-radius: 2px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  .achievement-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .achievement-desc {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 96px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-intro {
+    font-size: 17px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 15px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--gold);
+    background: #fffdf9;
+  }
+
+  .contact-link-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-link-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--gold);
+  }
+
+  .contact-link-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+
+  .contact-link-value {
+    font-size: 14px;
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .available-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #edf7ed;
+    color: #2a6e2a;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    border: 1px solid #c0e0c0;
+  }
+
+  .available-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2a6e2a;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 32px 48px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  footer span { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    .hero { padding: 80px 24px 60px; }
+    section { padding: 64px 24px; }
+    #skills, #achievements, #contact { padding: 64px 24px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-stats { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">NK</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Available for Freelance/Part Time/Full Time</div>
+    <h1>Noble<br><span>Koirala</span></h1>
+    <p class="hero-sub">Analytics & Operations Head specialising in Interactive Dashboards Designs, workflow automation, and financial reconciliation for fintech environments.</p>
+    <a href="#contact" class="hero-cta">Get in touch →</a>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">3+</div>
+        <div class="hero-stat-label">Years in Fintech</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">40%</div>
+        <div class="hero-stat-label">Effort Reduced</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-label">Reconciliation Errors</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">14+</div>
+        <div class="hero-stat-label">Team Members Led</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Introduction</div>
+  <div class="section-title">Turning operational complexity<br>into clarity</div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm an Analytics & Operations Head with over three years of experience in fintech, where I've built a track record of turning operational complexity into clean, reliable systems that teams can actually use and trust.</p>
+      <p>My work sits at the intersection of data and operations — designing dashboards that drive decisions, automating workflows that free up time, and reconciling financial data with zero tolerance for error. I'm comfortable working autonomously, translating a business need into a working solution, and handing it over with clear documentation.</p>
+      <p>Currently open to freelance engagements focused on BI tooling, Google Workspace automation, and operational dashboard design.</p>
+    </div>
+    <div class="about-right">
+      <div class="about-detail">
+        <div class="about-detail-label">Location</div>
+        <div class="about-detail-value">Kathmandu, Nepal (Remote)</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Current Role</div>
+        <div class="about-detail-value">Analytics & Operations Head — CityTech (FinPOS)</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Education</div>
+        <div class="about-detail-value">BSc Information Technology, Texas College of Management and IT</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Certification</div>
+        <div class="about-detail-value">AWS Fundamentals: Going Cloud-Native — Coursera</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Languages</div>
+        <div class="about-detail-value">English (professional), Nepali (native)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="skills-inner">
+    <div class="section-label" style="color: var(--gold);">Capabilities</div>
+    <div class="section-title">Tools &amp; expertise</div>
+    <div class="skills-grid fade-in">
+      <div class="skill-card">
+        <div class="skill-category">BI & Analytics</div>
+        <ul class="skill-list">
+          <li>Power BI</li>
+          <li>Looker Studio</li>
+          <li>Google Sheets</li>
+          <li>Excel Analytics</li>
+          <li>Data Visualisation</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Automation</div>
+        <ul class="skill-list">
+          <li>Google Apps Script</li>
+          <li>Workflow Automation</li>
+          <li>Reporting Systems</li>
+          <li>Portal Consolidation</li>
+          <li>Zapier</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Fintech Operations</div>
+        <ul class="skill-list">
+          <li>Financial Reconciliation</li>
+          <li>POS Device Management</li>
+          <li>Merchant Integrations</li>
+          <li>Banking Liaison</li>
+          <li>Compliance</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Leadership</div>
+        <ul class="skill-list">
+          <li>Team Management</li>
+          <li>Client Relationships</li>
+          <li>Cross-functional Collab</li>
+          <li>SLA Management</li>
+          <li>Training & Mentoring</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Cloud & Integrations</div>
+        <ul class="skill-list">
+          <li>AWS Fundamentals</li>
+          <li>Google Workspace</li>
+          <li>HubSpot</li>
+          <li>Slack</li>
+          <li>Atlassian Suite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <div class="section-title">Work experience</div>
+  <div class="timeline fade-in">
+
+    <div class="timeline-item">
+      <div class="timeline-period">Feb 2024 — Present</div>
+      <div class="timeline-role">Analytics & Operations Head</div>
+      <div class="timeline-company">CityTech (FinPOS) · Kathmandu, Nepal</div>
+      <ul class="timeline-bullets">
+        <li>Designed and implemented automation workflows using Google Sheets, Apps Script, Looker Studio, and Power BI, reducing manual effort by 40%.</li>
+        <li>Built and maintained real-time dashboards for billing, issue logs, and merchant support, enabling faster decision-making across teams.</li>
+        <li>Consolidated data from multiple portals into a single automated performance monitoring system, cutting reporting time from days to hours.</li>
+        <li>Supervised and trained a 14-member support team, ensuring timely visit and call management.</li>
+        <li>Led reconciliation of thousands of POS devices and merchant transactions with zero discrepancies.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-period">Jul 2023 — Feb 2024</div>
+      <div class="timeline-role">Reconciliation Lead</div>
+      <div class="timeline-company">Nepal Payment Solution · Kathmandu, Nepal</div>
+      <ul class="timeline-bullets">
+        <li>Led reconciliation processes across merchants and banks, reducing errors by 25% through process standardisation.</li>
+        <li>Managed client issue escalations and maintained strong relationships with financial institutions, wallets, and remittance companies.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-period">Jul 2022 — Jun 2023</div>
+      <div class="timeline-role">Support Executive</div>
+      <div class="timeline-company">Nepal Payment Solution · Kathmandu, Nepal</div>
+      <ul class="timeline-bullets">
+        <li>Continued client support while focusing on technical troubleshooting.</li>
+        <li>Strengthened merchant integrations and reconciliation workflows, improving overall operational accuracy.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-period">Jan 2022 — Jun 2022</div>
+      <div class="timeline-role">Support Associate</div>
+      <div class="timeline-company">Nepal Payment Solution · Kathmandu, Nepal</div>
+      <ul class="timeline-bullets">
+        <li>Handled first-line client support and issue resolution, ensuring accurate financial reporting and smooth onboarding.</li>
+        <li>Built relationships with high-value merchants including banks, wallets, and major remittance companies.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<div id="achievements">
+  <div class="achievements-inner">
+    <div class="section-label">Impact</div>
+    <div class="section-title">Key achievements</div>
+    <div class="achievements-grid fade-in">
+      <div class="achievement-card">
+        <div class="achievement-num">40%</div>
+        <div class="achievement-desc">Reduction in manual operational effort through end-to-end automation of reporting workflows</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-num">0</div>
+        <div class="achievement-desc">Discrepancies across thousands of POS device and merchant transaction reconciliations</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-num">Days→hrs</div>
+        <div class="achievement-desc">Reporting turnaround cut by consolidating multiple data portals into a unified monitoring system</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-num">25%</div>
+        <div class="achievement-desc">Reduction in reconciliation errors through process standardisation across the team</div>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-num">4 yrs</div>
+        <div class="achievement-desc">Fast-tracked from intern to Analytics & Operations Head, leading a 15-member team</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's work together</div>
+  <div class="section-title">Get in touch</div>
+  <div class="contact-grid fade-in">
+    <div>
+      <div class="available-badge">
+        <div class="available-dot"></div>
+        Available for work
+      </div>
+      <p class="contact-intro">I'm currently open to discrete, well-scoped works particularly around Interactive dashboard design, Google Workspace automation, and operational tooling for digital organisations.</p>
+      <p style="color: var(--text-muted); font-size: 14px;">Based in Kathmandu, Nepal. Working remotely with clients across Asia and Europe.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:koirala.noble@gmail.com" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">koirala.noble@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+9779807763328" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-value">+977 9807763328</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/noble-koirala-49b47519a" target="_blank" class="contact-link">
+        <div class="contact-link-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">noble-koirala-49b47519a</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built for <span>Noble Koirala</span> · Kathmandu, Nepal · 2025</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

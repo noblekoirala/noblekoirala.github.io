@@ -462,6 +462,111 @@
     line-height: 1.6;
   }
 
+
+  /* DASHBOARD SHOWCASE — wider, responsive layout */
+  #dashboards {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 96px clamp(24px, 4vw, 64px);
+  }
+
+  #dashboards > .section-label,
+  #dashboards > .section-title,
+  #dashboards .dashboard-grid {
+    width: 100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .dashboard-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 4px;
+  }
+
+  .dashboard-frame-wrap {
+    position: relative;
+    width: 100%;
+    height: min(78vw, 900px);
+    min-height: 620px;
+    overflow: hidden;
+    border-bottom: 2px solid var(--gold);
+    background: #fff;
+  }
+
+  .dashboard-tag {
+    position: absolute;
+    z-index: 2;
+    top: 14px;
+    left: 16px;
+    padding: 6px 12px;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .dashboard-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .dashboard-body {
+    padding: 28px 32px;
+  }
+
+  .dashboard-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .dashboard-desc {
+    color: var(--text-mid);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .dashboard-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .dashboard-tool {
+    display: inline-block;
+    padding: 5px 10px;
+    background: var(--cream-dark);
+    color: var(--navy);
+    font-size: 11px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    #dashboards { padding: 64px 20px; }
+    .dashboard-frame-wrap {
+      height: 720px;
+      min-height: 520px;
+    }
+    .dashboard-body { padding: 22px; }
+  }
+
   /* CONTACT */
   #contact {
     padding: 96px 48px;
@@ -782,9 +887,17 @@
   <div class="dashboard-grid fade-in">
 
     <div class="dashboard-card">
-      <div style="width:100%;height:800px;overflow:hidden;border-bottom:2px solid #c8a96e;position:relative;">
-        <div class="dashboard-tag">Data Studio Report</div>
-        <iframe id="pos-iframe" src="https://lookerstudio.google.com/embed/reporting/11213809-f753-4c93-b584-b82bddbe9161/page/WihsF" frameborder="0" style="border:0;position:absolute;top:0;left:0;width:600px;height:750px;transform-origin:top left;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+      <div class="dashboard-frame-wrap">
+        <div class="dashboard-tag">Looker Studio Report</div>
+        <iframe
+          id="pos-iframe"
+          class="dashboard-frame"
+          title="POS Device Monitoring Dashboard"
+          src="https://lookerstudio.google.com/embed/reporting/11213809-f753-4c93-b584-b82bddbe9161/page/WihsF"
+          frameborder="0"
+          allowfullscreen
+          sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+        </iframe>
       </div>
       <div class="dashboard-body">
         <div class="dashboard-title">POS Device Monitoring</div>
